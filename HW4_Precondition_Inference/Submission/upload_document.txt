@@ -1,0 +1,17 @@
+Complete this document and upload along with your prediction results and your code.
+
+### Method Name ###
+fine-tuning "roberta-large-snli_mnli_fever_anli_R1_R2_R3-nli"
+
+### Sentence pair encoder ###
+My sentence pair encodings were based on a pre-trained Roberta-Large NLI model, which was trained on a combination of seven popular NLI datasets (like SNLI and MNLI). I used a Transformer, more specifically, utilizing the "simpletransformers" library. It’s sentence pair ClassificationModel class internally uses a bi-encoder on the passed texts during the “train_model” and “predict” functions.  
+
+### Training & Development ###
+While using a manual_seed (to control for the randomization), I evaluated the Transformers’ performances by simply calculating the accuracy of the classification model’s predictions for the dev set — against its ground truths. I did a lot of fine-tuning, by trained the model on the training set — using a batch size of 32 and terminated after 2 epochs. Although these two model parameters were chosen due to showing good performances over many attempts,  my options for them were also quite limited — due to GPU and long run-time constraints. Based on hyper-parameter tuning from multiple tests on the dev set, I determined my classification Transformer’s best hyper-parameters to be a learning rate of 2.5e-5 while using Adam optimization with an epsilon of 1e-8. To make sure there was no serious overfitting, I also evaluated my model accuracy after joining, shuffling, and splitting the train and dev sets. 
+
+### Other methods ###
+Aside from my final chosen model, I tried tested a variety of other pretrained transformers (from Hugging Face) — such as based on the ROBERTA, BERT, ALBERT, ELECTRA, and XLNET model types. Another method I also attempted was using the “sentence_transformers” library’s CrossEncoder function to compute sentence embeddings and determine the precondition classes based on the cosine distances of the sentence pairs. I reached ~87% accuracy on the dev set, but it was still lower than my main method’s performance. Overall, I also tried using some NLP preprocessing techniques on the sentence pairs — such as punctuation and stop word removal — which either didn’t affect the model or worsened its performance. 
+
+### Packages ###
+simpletransformers
+pandas
