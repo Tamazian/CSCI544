@@ -1,0 +1,21 @@
+Complete this document and upload along with your prediction results and your code.
+
+### Method Name ###
+Ensemble Learning with Bagging (ie Majority Voting): (TFIDF + Logit Regression), (TFIDF + SVM), (TFIDF + Multinomial NB), (TFIDF + FFNN), and (TFIDF + Random Forest)
+
+### Representation of sentence ###
+To transform the text samples into appropriate sentence representations, I used a TFIDF vectorizer — from “sklearn”. The embeddings for each sentence were created considering unigrams and bigrams. 
+
+### Classifier ###
+All five of my ensemble learning models used TFIDF as their encoder. The Multinomial Naive Bayes model’s learning objective was the negative joint log-likelihood minimization, which applied used a Lidstone smoothing parameter (alpha = 0.1) set by CV hyper-parameter tuning. The SVM classifier (with an RBF kernel) used a squared L2 loss function and the Logistic Regression applied L2 penalty — each with their regularization term (C) being 10 and 30, respectively. The Random Forest classifier was trained with the Gini impurity criteria, while FFNN used binary cross entropy (with Adam optimization) for its loss function. Finally, to complete the ensemble learning, I computed the max vote (for each instance) of the predictions from these 5 models to get the final classification result. 
+
+### Training & Development ###
+The FFNN model had 2 activation layers (ReLU + Sigmoid) and was trained using a batch size of 128 — terminating after 11 epochs. The Multinomial NB, Logit, and SVM classifiers applied cross validation to tune hyper-parameters alpha and C — respectively. For all the individual models, as well as multiple combinations of ensemble learning, I calculated the accuracy of the dev set predictions. Also, to check for any significant overfitting, I combined the training and dev sets together, shuffled them, and re-split them to then retrain the models and find the dev set accuracy (multiple times). 
+
+### Other methods ###
+Aside from the 5 models I used for my final prediction, I also tried to classify the cyphertext using the Decision Tree, KNN, and Linear SVC classification methods. However, each of them had relatively lower accuracy and thus were not used. I also tried using Bag-of-Words sentence representations, but TFIDF was superior. 
+
+### Packages ###
+sklearn
+keras
+statistics
